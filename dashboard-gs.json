@@ -1,0 +1,1374 @@
+[
+    {
+        "id": "8de10421a59590eb",
+        "type": "tab",
+        "label": "Global Solution - TechZap",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fd7b8f6b0881e7f4",
+        "type": "mqtt in",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "topic": "techzap-appsol/temperature",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "0826686b695d9352",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "2dbf01e7b5c3adcd",
+                "8c729a093f0debf2"
+            ]
+        ]
+    },
+    {
+        "id": "93758c54665d5998",
+        "type": "mqtt in",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "topic": "techzap-appsol/humidity",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "0826686b695d9352",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 570,
+        "y": 460,
+        "wires": [
+            [
+                "f1a8f3a340dab364",
+                "816f4e764acb18f8"
+            ]
+        ]
+    },
+    {
+        "id": "51fdac251d41bedd",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Adicionar Temperatura",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "8dc70acce3dc5b77",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Adicionar Umidade",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d524c41d863cbd99",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê Todas as Temperaturas",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "32ffaf7c1b9c8dd6",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê Todas as Umidades",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "06a3b6303dca4121",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Apagar Temperaturas",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e81dc921e7382b3c",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Apagar Umidades",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "10ac50e89ec27661",
+        "type": "function",
+        "z": "8de10421a59590eb",
+        "name": "Busca a última Temperatura",
+        "func": "// Verifica se msg.payload é um array válido e não vazio\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Obtém o último elemento do array\n    const lastRowData = msg.payload[msg.payload.length - 1];\n    \n    // Verifica se o último elemento contém dados\n    if (lastRowData && lastRowData.length > 0) {\n        // Extrai a temperatura do último elemento\n        const temperature = parseFloat(lastRowData);\n\n        // Armazena a temperatura na mensagem\n        msg.temperature = temperature;\n        msg.lastRowTemp = 1; // Assume que é uma única linha\n    } else {\n        // Caso o último elemento não tenha dados, define a temperatura como 0\n        msg.temperature = 0;\n        msg.lastRowTemp = 0;\n    }\n} else {\n    // Caso msg.payload não seja um array válido, define a temperatura como 0\n    msg.temperature = 0;\n    msg.lastRowTemp = 0;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 160,
+        "wires": [
+            [
+                "67e487ae474d18a6",
+                "a1e441062e2e1d4d"
+            ]
+        ]
+    },
+    {
+        "id": "a1e441062e2e1d4d",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê Temperatura Atual",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1590,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "bee8bbaa2b1f48aa",
+        "type": "function",
+        "z": "8de10421a59590eb",
+        "name": "Busca a última Umidade",
+        "func": "// Verifica se msg.payload é um array válido e não vazio\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Obtém o último elemento do array\n    const lastRowData = msg.payload[msg.payload.length - 1];\n\n    // Verifica se o último elemento contém dados\n    if (lastRowData && lastRowData.length > 0) {\n        // Extrai a umidade do último elemento\n        const humidity = parseFloat(lastRowData);\n\n        // Armazena a umidade na mensagem\n        msg.humidity = humidity;\n        msg.lastRowHum = 1; // Assume que é uma única linha\n    } else {\n        // Caso o último elemento não tenha dados, define a umidade como 0\n        msg.humidity = 0;\n        msg.lastRowHum = 0;\n    }\n} else {\n    // Caso msg.payload não seja um array válido, define a umidade como 0\n    msg.humidity = 0;\n    msg.lastRowHum = 0;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1590,
+        "y": 500,
+        "wires": [
+            [
+                "1179d20af5f137bc",
+                "4b35b3aef3b19991"
+            ]
+        ]
+    },
+    {
+        "id": "4b35b3aef3b19991",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê Umidade Atual",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1850,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "40c28c1f5f933592",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê Umidade Atual 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1860,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "189a3c72395c6489",
+        "type": "function",
+        "z": "8de10421a59590eb",
+        "name": "Busca a última Umidade",
+        "func": "// Verifica se msg.payload é um array válido e não vazio\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Obtém o último elemento do array\n    const lastRowData = msg.payload[msg.payload.length - 1];\n\n    // Verifica se o último elemento contém dados\n    if (lastRowData && lastRowData.length > 0) {\n        // Extrai a umidade do último elemento\n        const humidity = parseFloat(lastRowData);\n\n        // Armazena a umidade na mensagem\n        msg.humidity = humidity;\n        msg.lastRowHum = 1; // Assume que é uma única linha\n    } else {\n        // Caso o último elemento não tenha dados, define a umidade como 0\n        msg.humidity = 0;\n        msg.lastRowHum = 0;\n    }\n} else {\n    // Caso msg.payload não seja um array válido, define a umidade como 0\n    msg.humidity = 0;\n    msg.lastRowHum = 0;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1590,
+        "y": 620,
+        "wires": [
+            [
+                "1179d20af5f137bc",
+                "40c28c1f5f933592"
+            ]
+        ]
+    },
+    {
+        "id": "a035481a5a168eee",
+        "type": "function",
+        "z": "8de10421a59590eb",
+        "name": "Busca a última Temperatura",
+        "func": "// Verifica se msg.payload é um array válido e não vazio\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Obtém o último elemento do array\n    const lastRowData = msg.payload[msg.payload.length - 1];\n    \n    // Verifica se o último elemento contém dados\n    if (lastRowData && lastRowData.length > 0) {\n        // Extrai a temperatura do último elemento\n        const temperature = parseFloat(lastRowData);\n\n        // Armazena a temperatura na mensagem\n        msg.temperature = temperature;\n        msg.lastRowTemp = 1; // Assume que é uma única linha\n    } else {\n        // Caso o último elemento não tenha dados, define a temperatura como 0\n        msg.temperature = 0;\n        msg.lastRowTemp = 0;\n    }\n} else {\n    // Caso msg.payload não seja um array válido, define a temperatura como 0\n    msg.temperature = 0;\n    msg.lastRowTemp = 0;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 280,
+        "wires": [
+            [
+                "67e487ae474d18a6",
+                "5b0b214a2b051b33"
+            ]
+        ]
+    },
+    {
+        "id": "5b0b214a2b051b33",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê Temperatura Atual 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1590,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f1a8f3a340dab364",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "append",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Hum!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Adicionar Umidade",
+        "x": 860,
+        "y": 420,
+        "wires": [
+            [
+                "8dc70acce3dc5b77"
+            ]
+        ],
+        "icon": "font-awesome/fa-plus"
+    },
+    {
+        "id": "8c729a093f0debf2",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "get",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Temp!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Lê Todas as Temperaturas",
+        "x": 510,
+        "y": 160,
+        "wires": [
+            [
+                "d524c41d863cbd99",
+                "10ac50e89ec27661"
+            ]
+        ],
+        "icon": "font-awesome/fa-book"
+    },
+    {
+        "id": "816f4e764acb18f8",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "get",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Hum!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Lê Todas as Umidades",
+        "x": 870,
+        "y": 500,
+        "wires": [
+            [
+                "32ffaf7c1b9c8dd6",
+                "bee8bbaa2b1f48aa"
+            ]
+        ],
+        "icon": "font-awesome/fa-book"
+    },
+    {
+        "id": "2dbf01e7b5c3adcd",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "append",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Temp!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Adicionar Temperatura",
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "51fdac251d41bedd"
+            ]
+        ],
+        "icon": "font-awesome/fa-plus"
+    },
+    {
+        "id": "4807726fff08ed43",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "clear",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Hum!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Apagar Umidades",
+        "x": 1080,
+        "y": 540,
+        "wires": [
+            [
+                "e81dc921e7382b3c",
+                "511d444a8eea7162"
+            ]
+        ],
+        "icon": "font-awesome/fa-trash"
+    },
+    {
+        "id": "05a5d8a8ee967662",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "clear",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Temp!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Apagar Temperaturas",
+        "x": 730,
+        "y": 200,
+        "wires": [
+            [
+                "06a3b6303dca4121",
+                "9ea62cbe8c073730"
+            ]
+        ],
+        "icon": "font-awesome/fa-trash"
+    },
+    {
+        "id": "9ea62cbe8c073730",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "get",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Temp!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Lê Todas as Temperaturas",
+        "x": 1010,
+        "y": 240,
+        "wires": [
+            [
+                "a035481a5a168eee"
+            ]
+        ],
+        "icon": "font-awesome/fa-book"
+    },
+    {
+        "id": "511d444a8eea7162",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "get",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Hum!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Lê Todas as Umidades",
+        "x": 1330,
+        "y": 580,
+        "wires": [
+            [
+                "189a3c72395c6489"
+            ]
+        ],
+        "icon": "font-awesome/fa-book"
+    },
+    {
+        "id": "d086e50b30ee0ceb",
+        "type": "ui_button",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "group": "c30867b3c099c22d",
+        "order": 30,
+        "width": 6,
+        "height": 4,
+        "passthru": false,
+        "label": "Apagar Umidades",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "delete_forever",
+        "payload": "[]",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 830,
+        "y": 540,
+        "wires": [
+            [
+                "4807726fff08ed43"
+            ]
+        ]
+    },
+    {
+        "id": "366b93eecc62da72",
+        "type": "ui_button",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "group": "c30867b3c099c22d",
+        "order": 27,
+        "width": 6,
+        "height": 4,
+        "passthru": false,
+        "label": "Apagar Temperaturas",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "delete_forever",
+        "payload": "[]",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "05a5d8a8ee967662"
+            ]
+        ]
+    },
+    {
+        "id": "b60664a603774cf2",
+        "type": "ui_button",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "group": "c30867b3c099c22d",
+        "order": 1,
+        "width": 30,
+        "height": 2,
+        "passthru": false,
+        "label": "Atualizar Dados",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "green",
+        "className": "",
+        "icon": "autorenew",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 120,
+        "y": 500,
+        "wires": [
+            [
+                "8c729a093f0debf2",
+                "816f4e764acb18f8",
+                "fea7638e21a512fb",
+                "8b03e03985824cf2"
+            ]
+        ]
+    },
+    {
+        "id": "1179d20af5f137bc",
+        "type": "ui_gauge",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "group": "c30867b3c099c22d",
+        "order": 5,
+        "width": 15,
+        "height": 12,
+        "gtype": "wave",
+        "title": "Umidade",
+        "label": "%",
+        "format": "{{humidity}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b300",
+            "#e6e600",
+            "#d51515"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1800,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "67e487ae474d18a6",
+        "type": "ui_gauge",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "group": "c30867b3c099c22d",
+        "order": 3,
+        "width": 14,
+        "height": 12,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "ºC",
+        "format": "{{temperature}}",
+        "min": "-45",
+        "max": "45",
+        "colors": [
+            "#00e9fa",
+            "#0fe600",
+            "#d70404"
+        ],
+        "seg1": "10",
+        "seg2": "30",
+        "diff": false,
+        "className": "",
+        "x": 1530,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "fea7638e21a512fb",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Verifica a Atualização dos Dados",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 240,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "0b396f44927e371e",
+        "type": "mqtt in",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "topic": "techzap-appsol/energy",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "0826686b695d9352",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 820,
+        "wires": [
+            [
+                "b12c37b211c34a6e",
+                "8b03e03985824cf2"
+            ]
+        ]
+    },
+    {
+        "id": "37305d04a2876d8e",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Adicionar Energia",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "79d89d34fd5e7ea3",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê Todas as Energias",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "c9bb3d52881db11b",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Apagar Energias",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "53a23b88b7e52f1d",
+        "type": "function",
+        "z": "8de10421a59590eb",
+        "name": "Busca a última Energia",
+        "func": "// Verifica se msg.payload é um array válido e não vazio\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Obtém o último elemento do array\n    const lastRowData = msg.payload[msg.payload.length - 1];\n\n    // Verifica se o último elemento contém dados\n    if (lastRowData && lastRowData.length > 0) {\n        // Extrai a umidade do último elemento\n        const energy = parseFloat(lastRowData);\n\n        // Armazena a umidade na mensagem\n        msg.energy = energy;\n        msg.lastRowEnergy = 1; // Assume que é uma única linha\n    } else {\n        // Caso o último elemento não tenha dados, define a umidade como 0\n        msg.energy = 0;\n        msg.lastRowEnergy = 0;\n    }\n} else {\n    // Caso msg.payload não seja um array válido, define a umidade como 0\n    msg.energy = 0;\n    msg.lastRowEnergy = 0;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 860,
+        "wires": [
+            [
+                "84a77f164e486843",
+                "d68e21564588cf6f"
+            ]
+        ]
+    },
+    {
+        "id": "d68e21564588cf6f",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê a Energia Atual",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1480,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "008c973c0e6257ec",
+        "type": "debug",
+        "z": "8de10421a59590eb",
+        "name": "debug - Lê a Energia Atual 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1480,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "e3676b1774ebc7bd",
+        "type": "function",
+        "z": "8de10421a59590eb",
+        "name": "Busca a última Energia",
+        "func": "// Verifica se msg.payload é um array válido e não vazio\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Obtém o último elemento do array\n    const lastRowData = msg.payload[msg.payload.length - 1];\n\n    // Verifica se o último elemento contém dados\n    if (lastRowData && lastRowData.length > 0) {\n        // Extrai a umidade do último elemento\n        const energy = parseFloat(lastRowData);\n\n        // Armazena a umidade na mensagem\n        msg.energy = energy;\n        msg.lastRowEnergy = 1; // Assume que é uma única linha\n    } else {\n        // Caso o último elemento não tenha dados, define a umidade como 0\n        msg.energy = 0;\n        msg.lastRowEnergy = 0;\n    }\n} else {\n    // Caso msg.payload não seja um array válido, define a umidade como 0\n    msg.energy = 0;\n    msg.lastRowEnergy = 0;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 980,
+        "wires": [
+            [
+                "84a77f164e486843",
+                "008c973c0e6257ec"
+            ]
+        ]
+    },
+    {
+        "id": "b12c37b211c34a6e",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "append",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Energy!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Adicionar Energia",
+        "x": 480,
+        "y": 780,
+        "wires": [
+            [
+                "37305d04a2876d8e"
+            ]
+        ],
+        "icon": "font-awesome/fa-plus"
+    },
+    {
+        "id": "8b03e03985824cf2",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "get",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Hum!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Lê Todas as Energias",
+        "x": 490,
+        "y": 860,
+        "wires": [
+            [
+                "79d89d34fd5e7ea3",
+                "53a23b88b7e52f1d"
+            ]
+        ],
+        "icon": "font-awesome/fa-book"
+    },
+    {
+        "id": "f236ce700d168c3e",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "clear",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Hum!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Apagar Energias",
+        "x": 690,
+        "y": 900,
+        "wires": [
+            [
+                "c9bb3d52881db11b",
+                "eed9276cceef1479"
+            ]
+        ],
+        "icon": "font-awesome/fa-trash"
+    },
+    {
+        "id": "eed9276cceef1479",
+        "type": "GSheet",
+        "z": "8de10421a59590eb",
+        "creds": "26ce82d5d5c311e0",
+        "method": "get",
+        "action": "",
+        "sheet": "1LcKxzaANf1Jd3EIGcOekDOus-SnJEffdyMypUfr0CnA",
+        "cells": "Hum!A2:A1000",
+        "flatten": false,
+        "name": "GSheet - Lê Todas as Energias",
+        "x": 950,
+        "y": 940,
+        "wires": [
+            [
+                "e3676b1774ebc7bd"
+            ]
+        ],
+        "icon": "font-awesome/fa-book"
+    },
+    {
+        "id": "25e3701898b50bb3",
+        "type": "ui_button",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "group": "c30867b3c099c22d",
+        "order": 44,
+        "width": 16,
+        "height": 2,
+        "passthru": false,
+        "label": "Apagar Energias",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "delete_forever",
+        "payload": "[]",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 450,
+        "y": 900,
+        "wires": [
+            [
+                "f236ce700d168c3e"
+            ]
+        ]
+    },
+    {
+        "id": "84a77f164e486843",
+        "type": "ui_gauge",
+        "z": "8de10421a59590eb",
+        "name": "",
+        "group": "c30867b3c099c22d",
+        "order": 19,
+        "width": 16,
+        "height": 11,
+        "gtype": "compass",
+        "title": "Energia",
+        "label": "",
+        "format": "{{energy}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b300",
+            "#e6e600",
+            "#d51515"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1420,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "f8f1a81c5029d266",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 2,
+        "width": 30,
+        "height": 1
+    },
+    {
+        "id": "272ba7675b7388c5",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "a9a85d2edeed031b",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 6,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9a7d623c0f1c4149",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 7,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "3ba22670cacc1af8",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 8,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "f9146681feaae568",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 9,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "e170c5b23a50e747",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 10,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "27e4ef22ea7daff0",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 11,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "f39c418510ebf7c2",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 12,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "0aef98f9e70cac41",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 13,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "deb43878745020b4",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 14,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "3ab3dcefd373026d",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 15,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9420e95e3eb48f0f",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 16,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "eda05bbb76f34b85",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 17,
+        "width": 30,
+        "height": 1
+    },
+    {
+        "id": "32d9b2868047e071",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 18,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "c9f23d3a7dc48e01",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 20,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "cf6dd07621465dfc",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 21,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "d65e9c80a371ab22",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 22,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "77fbe453e880594e",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 23,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "14f9dddb98da6978",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 24,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "ea02e0321716dd76",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 25,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "a0c0c18870376153",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 26,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "41586063a43c4e16",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 28,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "c1dd62dbff5555b1",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 29,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "712e925d0996bbad",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 31,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "71d78c44d6a27e88",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 32,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "43400e1116f5bba0",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 33,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "fe9d512fed51d71a",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 34,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "4f64c1f874702d7e",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 35,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "dae9d296bb2cd102",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 36,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "e82b55bc7f377be0",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 37,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "c4280785dd516f19",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 38,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "504a15f1cd372fca",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 39,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "9d8552e191da4ae1",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 40,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "d80207260f56db21",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 41,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "92d1df6b62ef4509",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 42,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "5bba7d0a32438127",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 43,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "fccd3764ccf6dec7",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 45,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "29dd90f5b6a3cd56",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 46,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "ff6ff34e42a1d851",
+        "type": "ui_spacer",
+        "z": "8de10421a59590eb",
+        "name": "spacer",
+        "group": "c30867b3c099c22d",
+        "order": 47,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "0826686b695d9352",
+        "type": "mqtt-broker",
+        "name": "MQTT Azure Cloud ESP32",
+        "broker": "techzap-mqttserver.brazilsouth.cloudapp.azure.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "26ce82d5d5c311e0",
+        "type": "gauth",
+        "name": "node-red@cp2-disruptive-architectures.iam.gserviceaccount.com"
+    },
+    {
+        "id": "c30867b3c099c22d",
+        "type": "ui_group",
+        "name": "Data",
+        "tab": "73f8b440f4581103",
+        "order": 1,
+        "disp": false,
+        "width": 30,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "73f8b440f4581103",
+        "type": "ui_tab",
+        "name": "Temperature, Humidity and Energy",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
